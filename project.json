@@ -1,0 +1,25 @@
+{
+  "overview": "Galaxy Strike X is a premium 2D space shooter web game playable on both mobile and desktop browsers. Features rich particle effects, dual control schemes, an upgrade shop, leaderboards, and progressive enemy waves.",
+  "features": [
+    "Story Mode (15 waves with bosses) and Endless Survival Mode",
+    "4 upgradeable weapons with distinct visual effects",
+    "5 enemy types including Mini-Boss and Final Boss with complex AI",
+    "Player progression: XP, levels, unlockable ship skins, achievements",
+    "Full PC controls (keyboard+mouse) and mobile virtual joystick",
+    "Rich particle system: explosions, bullet trails, thruster flames",
+    "In-game upgrade shop, coin collection, and power-ups",
+    "Global leaderboard with persistent cloud saves",
+    "Professional futuristic HUD with health/shield/energy bars",
+    "Synthesized audio via Web Audio API"
+  ],
+  "category": "game",
+  "tags": [
+    "space-shooter",
+    "2d-game",
+    "canvas",
+    "mobile",
+    "leaderboard",
+    "upgrades"
+  ],
+  "last_updated": "2026-05-18T15:56:31.388Z"
+}

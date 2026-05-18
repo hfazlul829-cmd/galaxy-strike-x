@@ -1,0 +1,113 @@
+// Version: 3.0.0
+type AchievementId__999946369 = Nat;
+type AchievementStatus__690982688 =
+  {
+    achievementId : AchievementId__999946369;
+    unlocked : Bool;
+    unlockedAt : ?Timestamp__301639476
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type GameMode__672747651 = {#bossBattle; #endless; #hardcore; #story};
+type GameSave__1014856807 =
+  {
+    lastSaved : Timestamp__301639476;
+    purchaseHistory : [PurchaseRecord__741046033];
+    unlockedSkins : [SkinId__641153215];
+    weaponLevels : WeaponLevels__933164532
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type LeaderboardEntry__684075585 =
+  {
+    gameMode : GameMode__672747651;
+    player : Principal;
+    score : Nat;
+    timestamp : Timestamp__301639476;
+    username : Text;
+    waveReached : Nat
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OldCompletion__566437661 =
+  {
+    completed : Bool;
+    date : OldDate__761611798;
+    habitId : OldHabitId__464810319
+  };
+type OldDate__761611798 = Text;
+type OldHabitId__464810319 = Text;
+type OldHabit__322977483 =
+  {
+    color : Text;
+    createdAt : OldDate__761611798;
+    id : OldHabitId__464810319;
+    name : Text
+  };
+type OldUser__655922588 = {displayName : Text};
+type PlayerProfileInternal__93260664 =
+  {
+    var level : Nat;
+    var lifetimeKills : Nat;
+    var totalCoins : Nat;
+    var totalXP : Nat;
+    var username : Text
+  };
+type PurchaseRecord__741046033 =
+  {
+    cost : Nat;
+    itemId : Nat;
+    itemType : {#powerup; #skin; #weapon};
+    timestamp : Timestamp__301639476
+  };
+type SkinId__641153215 = Nat;
+type Timestamp__301639476 = Int;
+type WeaponLevels__933164532 = [Nat];
+actor ({
+  in userCompletions :
+    Map__605269027<Principal,
+                    Map__605269027<OldHabitId__464810319,
+                                    List__415060402<OldCompletion__566437661>>>;
+  in userHabits :
+    Map__605269027<Principal,
+                    Map__605269027<OldHabitId__464810319, OldHabit__322977483>>;
+  in users : Map__605269027<Principal, OldUser__655922588>
+}, {
+  stable achievementStore :
+    {
+      var root :
+        Node__46230540<Principal,
+                        List__415060402<AchievementStatus__690982688>>;
+      var size : Nat__490723111
+    };
+  stable leaderboardEntries :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?LeaderboardEntry__684075585]];
+      var elementIndex : Nat__490723111
+    };
+  stable playerStore :
+    {
+      var root : Node__46230540<Principal, PlayerProfileInternal__93260664>;
+      var size : Nat__490723111
+    };
+  stable saveStore :
+    {
+      var root : Node__46230540<Principal, GameSave__1014856807>;
+      var size : Nat__490723111
+    }
+});

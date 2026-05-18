@@ -1,0 +1,70 @@
+type WeaponLevels = vec nat;
+type Timestamp = int;
+type SubmitScoreRequest = 
+ record {
+   gameMode: GameMode;
+   score: nat;
+   waveReached: nat;
+ };
+type SkinId = nat;
+type PurchaseRecord = 
+ record {
+   cost: nat;
+   itemId: nat;
+   itemType: variant {
+               powerup;
+               skin;
+               weapon;
+             };
+   timestamp: Timestamp;
+ };
+type PlayerProfile = 
+ record {
+   level: nat;
+   lifetimeKills: nat;
+   totalCoins: nat;
+   totalXP: nat;
+   username: text;
+ };
+type LeaderboardEntry = 
+ record {
+   gameMode: GameMode;
+   player: principal;
+   score: nat;
+   timestamp: Timestamp;
+   username: text;
+   waveReached: nat;
+ };
+type GameSave = 
+ record {
+   lastSaved: Timestamp;
+   purchaseHistory: vec PurchaseRecord;
+   unlockedSkins: vec SkinId;
+   weaponLevels: WeaponLevels;
+ };
+type GameMode = 
+ variant {
+   bossBattle;
+   endless;
+   hardcore;
+   story;
+ };
+type AchievementStatus = 
+ record {
+   achievementId: AchievementId;
+   unlocked: bool;
+   unlockedAt: opt Timestamp;
+ };
+type AchievementId = nat;
+service : {
+  getAchievements: () -> (vec AchievementStatus) query;
+  getLeaderboard: () -> (vec LeaderboardEntry) query;
+  getPlayerProfile: () -> (opt PlayerProfile) query;
+  loadGameState: () -> (GameSave) query;
+  saveGameState: (weaponLevels: WeaponLevels, unlockedSkins: vec SkinId,
+   purchaseHistory: vec PurchaseRecord) -> ();
+  submitScore: (req: SubmitScoreRequest) -> ();
+  unlockAchievement: (achievementId: AchievementId) -> (bool);
+  updatePlayerProfile: (username: opt text, levelDelta: opt nat, coinsDelta:
+   opt int, xpDelta: opt nat, killsDelta: opt nat) -> (bool);
+}
